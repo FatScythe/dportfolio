@@ -16,7 +16,38 @@ const futura = localFont({
 });
 
 const calluna = localFont({
-  src: "../public/font/Shancalluna_regular.ttf",
+  src: [
+    {
+      path: "../public/font/Calluna-Light.otf",
+      weight: "300",
+      style: "normal",
+    },
+    {
+      path: "../public/font/Calluna-Regular.otf",
+      weight: "400",
+      style: "normal",
+    },
+    {
+      path: "../public/font/Calluna-It.otf",
+      weight: "400",
+      style: "italic",
+    },
+    {
+      path: "../public/font/Calluna-Semibold.otf",
+      weight: "600",
+      style: "normal",
+    },
+    {
+      path: "../public/font/Calluna-Bold.otf",
+      weight: "700",
+      style: "normal",
+    },
+    {
+      path: "../public/font/Calluna-Black.otf",
+      weight: "900",
+      style: "normal",
+    },
+  ],
   variable: "--font-calluna",
 });
 

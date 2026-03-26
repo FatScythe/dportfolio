@@ -5,17 +5,10 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 // util...
-import { cn } from "@/app/libs/utils";
+import { cn, projects } from "@/app/libs/utils";
 
 // icon...
 import { FaChevronDown } from "react-icons/fa";
-
-const projects = [
-  { name: "Business Banking", href: "/work/ibbank" },
-  { name: "Radix (Backend as a Service)", href: "/work/baas" },
-  { name: "Mobile Banking", href: "/work/mbank" },
-  { name: "Freelance", href: "/work/freelance" },
-];
 
 export default function Header() {
   const pathname = usePathname();
@@ -69,7 +62,7 @@ export default function Header() {
             <Link href="/" className={cn("group")}>
               <h1
                 className={cn(
-                  "text-sm text-nowrap tracking-widest sm:tracking-normal font-bold sm:text-4xl sm:font-normal uppercase transition-opacity group-hover:opacity-70",
+                  "font-sans text-sm text-nowrap tracking-widest sm:tracking-normal font-bold sm:text-4xl sm:font-normal uppercase transition-opacity group-hover:opacity-70",
                 )}
               >
                 daniel onyenobi
@@ -137,7 +130,7 @@ export default function Header() {
                   <span>work</span>
                   <FaChevronDown
                     className={cn(
-                      "w-3 h-3 opacity-50 transition-transform duration-300 sm:hidden",
+                      "w-3 h-3 opacity-50 transition-transform duration-300",
                       "group-hover:rotate-180",
                       isOpen && "rotate-180",
                     )}
@@ -161,16 +154,16 @@ export default function Header() {
                     "sm:bg-white sm:shadow-xl sm:border sm:border-gray-100 sm:p-5",
                   )}
                 >
-                  {projects.map((project, index) => (
+                  {Object.entries(projects).map(([key, value], index) => (
                     <Link
-                      key={index}
-                      href={project.href}
+                      key={key || index}
+                      href={`/work/${key}`}
                       className={cn(
                         "text-sm sm:text-[13px] tracking-wide hover:text-accent transition-colors whitespace-nowrap border-b border-transparent hover:border-accent/10 pb-1",
                         "text-center sm:text-left",
                       )}
                     >
-                      {project.name}
+                      {value.name}
                     </Link>
                   ))}
                 </div>
