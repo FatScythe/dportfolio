@@ -2,24 +2,30 @@ import { FaBehance, FaLinkedinIn } from "react-icons/fa";
 import { HiOutlineMail } from "react-icons/hi";
 import { cn } from "../libs/utils";
 
-export const socialLinks: Array<{
-  name: string;
-  href: string;
-  icon: React.JSX.Element;
-}> = [
-  {
-    name: "LinkedIn",
-    href: "https://www.linkedin.com/in/daniel-onyenobi-444596145/",
-    icon: <FaLinkedinIn size={20} />,
-  },
-  {
-    name: "Behance",
-    href: "http://behance.net/danielonyenobi",
-    icon: <FaBehance size={20} />,
-  },
+export const socialLinks = [
+  ...(process.env.NEXT_PUBLIC_PORTFOLIO_LINKEDIN
+    ? [
+        {
+          name: "LinkedIn",
+          href: process.env.NEXT_PUBLIC_PORTFOLIO_LINKEDIN,
+          icon: <FaLinkedinIn size={20} />,
+        },
+      ]
+    : []),
+
+  ...(process.env.NEXT_PUBLIC_PORTFOLIO_BEHANCE
+    ? [
+        {
+          name: "Behance",
+          href: process.env.NEXT_PUBLIC_PORTFOLIO_BEHANCE,
+          icon: <FaBehance size={20} />,
+        },
+      ]
+    : []),
+
   {
     name: "Email",
-    href: "mailto:dannyonyenobi@gmail.com",
+    href: `mailto:${process.env.NEXT_PUBLIC_PORTFOLIO_EMAIL || "johndoe@email.com"}`,
     icon: <HiOutlineMail size={20} />,
   },
 ];

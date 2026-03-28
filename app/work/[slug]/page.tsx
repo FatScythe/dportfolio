@@ -6,6 +6,22 @@ import PageHeader from "@/app/components/utils";
 // utils...
 import { cn, projects, SectionItem } from "@/app/libs/utils";
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const project = projects[slug];
+
+  if (!project) return { title: "Project Not Found" };
+
+  return {
+    title: project.name,
+    description: project.portfolio?.headerText || "Portfolio Project",
+  };
+}
+
 function WorkSections({ sections }: { sections: SectionItem[] }) {
   return (
     <div className="space-y-40">

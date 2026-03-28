@@ -16,7 +16,7 @@ export default function About() {
           <div className="col-span-2 lg:col-span-2 overflow-hidden rounded-sm bg-secondary/10">
             <Image
               src="https://placehold.co/600x400"
-              alt="Daniel Onyenobi"
+              alt={process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "John Doe"}
               width={600}
               height={400}
               className="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-in-out"
@@ -45,10 +45,10 @@ export default function About() {
         <div className="lg:col-span-6 lg:col-start-7 flex flex-col gap-10">
           <div className="space-y-8 font-serif text-lg leading-relaxed text-foreground/70 text-[16px]">
             <p>
-              Hi, I’m Daniel — a designer based in Lagos. I spend my time
-              exploring the space where human behavior meets digital
-              interaction, crafting experiences that feel as intentional as they
-              are intuitive.
+              Hi, I’m {process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "John Doe"} — a
+              designer based in Lagos. I spend my time exploring the space where
+              human behavior meets digital interaction, crafting experiences
+              that feel as intentional as they are intuitive.
             </p>
 
             <p>

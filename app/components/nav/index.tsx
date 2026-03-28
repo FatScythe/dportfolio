@@ -65,7 +65,7 @@ export default function Header() {
                   "font-sans text-sm text-nowrap tracking-widest sm:tracking-normal font-bold sm:text-4xl sm:font-normal uppercase transition-opacity group-hover:opacity-70",
                 )}
               >
-                daniel onyenobi
+                {process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "John Doe"}
               </h1>
             </Link>
           </div>
@@ -172,7 +172,8 @@ export default function Header() {
 
             <li>
               <Link
-                href="/resume"
+                href="https://drive.google.com/file/d/1d4sOTshJnty9pAGGECXMh8ZXOQaFfilo/view?usp=sharing"
+                target="_blank"
                 className={cn(
                   "transition-colors hover:text-accent",
                   isActive("/resume") ? "text-accent" : "text-foreground",

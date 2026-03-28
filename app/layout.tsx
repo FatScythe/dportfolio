@@ -52,9 +52,12 @@ const calluna = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Daniel Onyenobi",
+  title: {
+    template: `%s | ${process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "John Doe"}`,
+    default: process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "John Doe",
+  },
   description:
-    "Versatile UI/UX Designer specializing in engaging mobile and web interfaces. Expert at transforming complex data into impactful visual stories using Figma, Adobe Suite, and PowerPoint.",
+    "Versatile UI/UX Designer specializing in engaging mobile and web interfaces.",
 };
 
 export default function RootLayout({

@@ -1,28 +1,7 @@
 // utils...
 import { cn } from "@/app/libs/utils";
 import { ClassValue } from "clsx";
-
-// icons...
-import { FaLinkedinIn, FaBehance } from "react-icons/fa";
-import { TbMail } from "react-icons/tb";
-
-const socialLinks = [
-  {
-    name: "LinkedIn",
-    href: "https://www.linkedin.com/in/daniel-onyenobi-444596145/",
-    icon: <FaLinkedinIn size={20} />,
-  },
-  {
-    name: "Behance",
-    href: "http://behance.net/danielonyenobi",
-    icon: <FaBehance size={20} />,
-  },
-  {
-    name: "Email",
-    href: "mailto:dannyonyenobi@gmail.com",
-    icon: <TbMail size={20} />,
-  },
-];
+import { socialLinks } from "../utils";
 
 export default function Footer({ className = "" }: { className?: ClassValue }) {
   return (
@@ -55,7 +34,8 @@ export default function Footer({ className = "" }: { className?: ClassValue }) {
             "text-[10px] uppercase tracking-[0.2em] text-foreground/30 font-sans",
           )}
         >
-          © {new Date().getFullYear()} Daniel Onyenobi
+          © {new Date().getFullYear()}{" "}
+          {process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "John Doe"}
         </div>
       </div>
     </footer>

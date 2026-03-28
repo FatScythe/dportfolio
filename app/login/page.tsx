@@ -9,6 +9,9 @@ import Image from "next/image";
 // utils...
 import { cn } from "../libs/utils";
 
+// actions...
+import { verifyPassword } from "../actions/verify-password";
+
 export default function LoginPage() {
   async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -18,13 +21,12 @@ export default function LoginPage() {
     const params = new URLSearchParams(window.location.search);
     const redirectTo = params.get("from") || "/protected-work";
 
-    // TODO: Store passsord in .env...
-    if (password === "password") {
-      document.cookie =
-        "slug_auth=true; path=/; max-age=36000; SameSite=Strict";
+    const result = await verifyPassword(String(password ?? ""));
+    if (result.success) {
+      document.cookie = "slug_auth=true; path=/; max-age=600; SameSite=Strict";
       window.location.href = redirectTo;
     } else {
-      alert("Wrong password");
+      alert(result?.error || "Wrong password");
     }
   }
 
@@ -67,7 +69,7 @@ export default function LoginPage() {
               "text-lg uppercase tracking-[0.5em] text-white/90 font-serif",
             )}
           >
-            daniel onyenobi portfolio
+            {process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "john doe"} portfolio
           </p>
           <p className={cn("text-xl font-serif text-white/90")}>
             Feel free to reach out to me for the password
@@ -103,7 +105,7 @@ export default function LoginPage() {
               "text-[10px] uppercase tracking-[0.2em] text-white/40",
             )}
           >
-            daniel onyenobi
+            {process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "John Doe"}
           </p>
         </div>
       </div>
