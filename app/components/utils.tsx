@@ -55,7 +55,7 @@ export default function PageHeader({
       </h6>
       <h2
         className={cn(
-          "font-serif text-[44px] sm:text-[5.625vw] text-foreground text-8xl font-extralight",
+          "font-serif text-[44px] sm:text-[5.625vw] text-foreground font-extralight",
         )}
       >
         {subtitle}

@@ -21,7 +21,7 @@ export default function HeroBanner() {
   return (
     <section
       className={cn(
-        "bg-secondary overflow-hidden py-4 px-4 sm:px-12",
+        "bg-secondary overflow-hidden py-4 px-6 sm:px-12",
         "min-h-[70vh] flex items-center justify-center",
       )}
     >
@@ -32,7 +32,7 @@ export default function HeroBanner() {
       >
         <div
           className={cn(
-            "font-serif text-5xl sm:text-7xl lg:text-8xl text-background",
+            "font-serif text-[42.5px] leading-tight sm:leading-normal sm:text-7xl lg:text-8xl text-background",
             "selection:bg-accent/20 text-center",
           )}
         >

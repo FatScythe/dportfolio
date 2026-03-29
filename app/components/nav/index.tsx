@@ -77,7 +77,7 @@ export default function Header() {
             "sm:opacity-100 sm:visible",
             !openModal && "pointer-events-none sm:pointer-events-auto",
             openModal
-              ? "min-h-lvh opacity-100 bg-background visible absolute top-14 bottom-0 left-0 right-0 z-10"
+              ? "min-h-[95lvh] opacity-100 bg-background visible absolute top-14 bottom-0 left-0 right-0 z-10"
               : "min-h-0 h-0 opacity-0 invisible",
           )}
         >
@@ -172,7 +172,10 @@ export default function Header() {
 
             <li>
               <Link
-                href="https://drive.google.com/file/d/1d4sOTshJnty9pAGGECXMh8ZXOQaFfilo/view?usp=sharing"
+                href={
+                  process.env?.NEXT_PUBLIC_PORTFOLIO_CV_URL ||
+                  "https://drive.google.com/file/d/1d4sOTshJnty9pAGGECXMh8ZXOQaFfilo/view?usp=sharing"
+                }
                 target="_blank"
                 className={cn(
                   "transition-colors hover:text-accent",
