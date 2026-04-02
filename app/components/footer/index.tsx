@@ -1,9 +1,14 @@
+"use client";
+
 // utils...
 import { cn } from "@/app/libs/utils";
 import { ClassValue } from "clsx";
-import { socialLinks } from "../utils";
+
+// hooks...
+import { useSocialLinks } from "@/hook/useSocialLinks";
 
 export default function Footer({ className = "" }: { className?: ClassValue }) {
+  const socialLinks = useSocialLinks();
   return (
     <footer
       className={cn("w-full bg-background px-4 sm:px-8 py-12", className)}

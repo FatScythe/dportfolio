@@ -5,15 +5,18 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 // util...
-import { cn, projects } from "@/app/libs/utils";
+import { cn } from "@/app/libs/utils";
 
 // icon...
 import { FaChevronDown } from "react-icons/fa";
+import { usePortfolio } from "@/hook/usePortfolio";
 
 export default function Header() {
   const pathname = usePathname();
 
   const isActive = (path: string) => pathname === path;
+
+  const { projects } = usePortfolio();
 
   const [isOpen, setIsOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);

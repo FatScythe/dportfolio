@@ -1,23 +1,11 @@
 // utils...
 import { cn } from "@/app/libs/utils";
 
-const heroLines = [
-  { text: "Lagos based", highlight: "" },
-  { text: "designer, passionate", highlight: "", isItalic: true },
-  { text: "about ", highlight: "Suya, tea", isItalic: true },
-  {
-    text: "and solving",
-    highlight: "",
-    isItalic: false,
-  },
-  {
-    text: "complex problems.",
-    highlight: "",
-    isItalic: true,
-  },
-];
+// hook...
+import { usePortfolioData } from "@/hook/usePortfolioData";
 
-export default function HeroBanner() {
+export default async function HeroBanner() {
+  const { heroLines } = await usePortfolioData();
   return (
     <section
       className={cn(
