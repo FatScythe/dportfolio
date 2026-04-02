@@ -28,28 +28,35 @@ export const usePortfolioData = cache(async (): Promise<PortfolioData> => {
       behanceUrl:
         rawData?.settings?.behanceUrl || DEFAULT_PORTFOLIO_DATA.behanceUrl,
       heroLines:
-        rawData?.settings?.heroLines?.length > 0
-          ? rawData?.settings?.heroLines
+        rawData?.settings?.heroLines && rawData.settings.heroLines.length > 0
+          ? rawData.settings.heroLines
           : DEFAULT_PORTFOLIO_DATA.heroLines,
+
       aboutPage: {
         image1:
           rawData?.settings?.aboutPage?.image1 ||
-          DEFAULT_PORTFOLIO_DATA.aboutPage.image1,
+          DEFAULT_PORTFOLIO_DATA.aboutPage.image1 ||
+          null,
         image2:
           rawData?.settings?.aboutPage?.image2 ||
-          DEFAULT_PORTFOLIO_DATA.aboutPage.image2,
+          DEFAULT_PORTFOLIO_DATA.aboutPage.image2 ||
+          null,
         image3:
           rawData?.settings?.aboutPage?.image3 ||
-          DEFAULT_PORTFOLIO_DATA.aboutPage.image3,
+          DEFAULT_PORTFOLIO_DATA.aboutPage.image3 ||
+          null,
+
         paragraphs:
           rawData?.settings?.aboutPage?.paragraphs ||
-          DEFAULT_PORTFOLIO_DATA.aboutPage.paragraphs,
+          DEFAULT_PORTFOLIO_DATA.aboutPage.paragraphs ||
+          [],
       },
+
       projects:
         rawData?.projects?.length > 0
-          ? rawData?.projects?.reduce(
+          ? rawData.projects.reduce(
               (acc: Record<string, Project>, project: any) => {
-                acc[project.slug] = project;
+                if (project.slug) acc[project.slug] = project;
                 return acc;
               },
               {},
