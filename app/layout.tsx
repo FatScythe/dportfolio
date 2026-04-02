@@ -1,6 +1,8 @@
+import "./globals.css";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
+import { PortfolioProvider } from "@/context/portfolio.context";
+import { usePortfolioData } from "@/hook/usePortfolioData";
 
 const futura = localFont({
   src: [
@@ -60,14 +62,18 @@ export const metadata: Metadata = {
     "Versatile UI/UX Designer specializing in engaging mobile and web interfaces.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const formattedData = await usePortfolioData();
+
   return (
     <html lang="en" className={`${futura.variable} ${calluna.variable}`}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        <PortfolioProvider data={formattedData}>{children}</PortfolioProvider>
+      </body>
     </html>
   );
 }
