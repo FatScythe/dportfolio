@@ -1,10 +1,9 @@
-"use client";
-
 import Image from "next/image";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 import { Project, SectionItem } from "@/types/portfolio";
 import PageHeader from "@/app/components/utils";
 import { cn } from "@/app/libs/utils";
+import ZoomableImage from "@/app/components/utility";
 
 const portableTextComponents: PortableTextComponents = {
   marks: {
@@ -100,35 +99,25 @@ function WorkSections({
                 )}
               >
                 {section.images.map((img: any, i: number) => (
-                  <div key={i} className="space-y-2">
-                    <div
-                      className={cn(
-                        "relative overflow-hidden rounded-sm bg-gray-50 w-full",
-                        projectType === "mobile"
-                          ? "aspect-[9/16] max-w-sm mx-auto"
-                          : "aspect-video",
-                      )}
-                    >
-                      {img.image?.url && (
-                        <Image
-                          src={img.image.url}
-                          alt={img.subtext || "Project Image"}
-                          fill
-                          className="object-cover"
-                        />
-                      )}
-                    </div>
-                    {img.subtext && (
-                      <p className="text-xs text-gray-400 italic text-center">
-                        {img.subtext}
-                      </p>
+                  <div key={i}>
+                    {img.image?.url && (
+                      <ZoomableImage
+                        src={img.image.url}
+                        alt={img.subtext || "Project Image"}
+                        subtext={img.subtext}
+                        className={
+                          projectType === "mobile"
+                            ? "aspect-[9/16] max-w-sm mx-auto"
+                            : "aspect-video"
+                        }
+                      />
                     )}
                   </div>
                 ))}
               </div>
             )}
 
-            {/* Optional Quotes (Side by side on desktop, stacked on mobile) */}
+            {/* Optional Quotes */}
             {section.quotes && section.quotes.length > 0 && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-b border-gray-100 py-8">
                 {section.quotes.map((q: any, i: number) => (
@@ -149,7 +138,7 @@ function WorkSections({
               </div>
             )}
 
-            {/* Optional Paragraph 2 / Bullet Points */}
+            {/* Optional Paragraph 2 */}
             {section.paragraph2 && (
               <div className="space-y-4">
                 <PortableText
@@ -171,35 +160,25 @@ function WorkSections({
                 )}
               >
                 {section.images2.map((img: any, i: number) => (
-                  <div key={i} className="space-y-2">
-                    <div
-                      className={cn(
-                        "relative overflow-hidden rounded-sm bg-gray-50 w-full",
-                        projectType === "mobile"
-                          ? "aspect-[9/16] max-w-sm mx-auto"
-                          : "aspect-video",
-                      )}
-                    >
-                      {img.image?.url && (
-                        <Image
-                          src={img.image.url}
-                          alt={img.subtext || "Project Image"}
-                          fill
-                          className="object-cover"
-                        />
-                      )}
-                    </div>
-                    {img.subtext && (
-                      <p className="text-xs text-gray-400 italic text-center">
-                        {img.subtext}
-                      </p>
+                  <div key={i}>
+                    {img.image?.url && (
+                      <ZoomableImage
+                        src={img.image.url}
+                        alt={img.subtext || "Project Image"}
+                        subtext={img.subtext}
+                        className={
+                          projectType === "mobile"
+                            ? "aspect-[9/16] max-w-sm mx-auto"
+                            : "aspect-video"
+                        }
+                      />
                     )}
                   </div>
                 ))}
               </div>
             )}
 
-            {/* Optional Banner (Demarcated with lines above and below) */}
+            {/* Optional Banner */}
             {section.banner?.bannerTexts &&
               section.banner.bannerTexts.length > 0 && (
                 <div className="border-t border-b border-r-0 border-l-0 border-black border-2 py-16 my-8 space-y-4">
@@ -244,7 +223,7 @@ export default function WorkClient({ project }: { project: Project }) {
       />
 
       {headerImg?.image?.url && (
-        <div className="mb-16 space-y-3">
+        <div className="mb-16 space-y-3 -mx-4 sm:-mx-12">
           <div
             className={cn(
               "relative w-full overflow-hidden rounded-sm",
@@ -261,7 +240,7 @@ export default function WorkClient({ project }: { project: Project }) {
             />
           </div>
           {headerImg.subtext && (
-            <p className="text-xs text-gray-400 italic text-center">
+            <p className="text-xs text-gray-400 italic text-center px-4">
               {headerImg.subtext}
             </p>
           )}
@@ -269,8 +248,8 @@ export default function WorkClient({ project }: { project: Project }) {
       )}
 
       {portfolioWork.headerSubtitle && (
-        <div className="max-w-2xl mx-auto text-center mb-20">
-          <h2 className="text-xl leading-relaxed font-light text-gray-700">
+        <div className="max-w-3xl mx-auto text-center mb-20 px-4">
+          <h2 className="text-xl md:text-2xl leading-relaxed font-normal text-gray-900 whitespace-pre-wrap">
             {portfolioWork.headerSubtitle}
           </h2>
         </div>

@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 // util...
 import { cn } from "@/app/libs/utils";
 
@@ -9,6 +7,7 @@ import { cn } from "@/app/libs/utils";
 import { usePortfolio } from "@/hook/usePortfolio";
 import { useSocialLinks } from "@/hook/useSocialLinks";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
+import ZoomableImage from "../components/utility";
 
 const aboutPortableTextComponents: PortableTextComponents = {
   marks: {
@@ -58,14 +57,10 @@ export default function About() {
             )}
           >
             {aboutPage.image1 && (
-              <Image
+              <ZoomableImage
                 src={aboutPage.image1}
                 alt={portfolioName}
-                width={600}
-                height={400}
-                className={cn(
-                  "w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-700 ease-in-out",
-                )}
+                className="w-full h-auto aspect-[3/2]"
               />
             )}
           </div>
@@ -75,14 +70,10 @@ export default function About() {
             )}
           >
             {aboutPage.image2 && (
-              <Image
+              <ZoomableImage
                 src={aboutPage.image2}
                 alt="About 2"
-                width={300}
-                height={400}
-                className={cn(
-                  "w-full h-64 object-cover grayscale hover:grayscale-0 transition-all duration-700",
-                )}
+                className="w-full h-64 aspect-video"
               />
             )}
           </div>
@@ -92,14 +83,10 @@ export default function About() {
             )}
           >
             {aboutPage.image3 && (
-              <Image
+              <ZoomableImage
                 src={aboutPage.image3}
                 alt="About 3"
-                width={300}
-                height={400}
-                className={cn(
-                  "w-full h-64 object-cover grayscale hover:grayscale-0 transition-all duration-700",
-                )}
+                className="w-full h-64 aspect-video"
               />
             )}
           </div>
