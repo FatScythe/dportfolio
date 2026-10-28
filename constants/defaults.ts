@@ -5,7 +5,6 @@ export const DEFAULT_PORTFOLIO_DATA: PortfolioData = {
   emailAddress: process.env.NEXT_PUBLIC_PORTFOLIO_EMAIL || "johndoe@email.com",
   resumeUrl: process.env.NEXT_PUBLIC_PORTFOLIO_CV_URL || "#",
   linkedInUrl: process.env.NEXT_PUBLIC_PORTFOLIO_LINKEDIN || "#",
-  behanceUrl: process.env.NEXT_PUBLIC_PORTFOLIO_BEHANCE || "#",
   aboutPage: {
     image1: "https://placehold.co/600x400",
     image2: "https://placehold.co/300x400",
