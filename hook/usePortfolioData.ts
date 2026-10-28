@@ -32,7 +32,7 @@ export const usePortfolioData = cache(async (): Promise<PortfolioData> => {
       sanityQuery,
       {},
       {
-        next: { tags: ["portfolio"] }, // tag-based cache instead of timed revalidate...
+        next: { revalidate: 15 }, // revalidates the cache every 15 seconds
       },
     );
 
@@ -50,8 +50,6 @@ export const usePortfolioData = cache(async (): Promise<PortfolioData> => {
         rawData?.settings?.resumeUrl || DEFAULT_PORTFOLIO_DATA.resumeUrl,
       linkedInUrl:
         rawData?.settings?.linkedInUrl || DEFAULT_PORTFOLIO_DATA.linkedInUrl,
-      behanceUrl:
-        rawData?.settings?.behanceUrl || DEFAULT_PORTFOLIO_DATA.behanceUrl,
       heroLines: hasPortableTextContent(rawData?.settings?.heroLines)
         ? rawData.settings.heroLines
         : DEFAULT_PORTFOLIO_DATA.heroLines,

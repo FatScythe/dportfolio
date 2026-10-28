@@ -3,7 +3,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { usePortfolio } from "./usePortfolio";
 
 export function useSocialLinks() {
-  const { linkedInUrl, behanceUrl, emailAddress } = usePortfolio();
+  const { linkedInUrl, emailAddress } = usePortfolio();
 
   const links = [
     ...(linkedInUrl && linkedInUrl !== "#"
@@ -12,15 +12,6 @@ export function useSocialLinks() {
             name: "LinkedIn",
             href: linkedInUrl,
             icon: <FaLinkedinIn size={20} />,
-          },
-        ]
-      : []),
-    ...(behanceUrl && behanceUrl !== "#"
-      ? [
-          {
-            name: "Behance",
-            href: behanceUrl,
-            icon: <FaBehance size={20} />,
           },
         ]
       : []),

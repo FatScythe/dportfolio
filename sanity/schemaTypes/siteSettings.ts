@@ -25,7 +25,6 @@ export default defineType({
     defineField({ name: "emailAddress", type: "string" }),
     defineField({ name: "resumeUrl", type: "url" }),
     defineField({ name: "linkedInUrl", type: "url" }),
-    defineField({ name: "behanceUrl", type: "url" }),
     defineField({
       name: "heroLines",
       title: "Hero Section Lines (Line-by-Line)",
