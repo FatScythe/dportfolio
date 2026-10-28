@@ -11,79 +11,145 @@ export const DEFAULT_PORTFOLIO_DATA: PortfolioData = {
     image2: "https://placehold.co/300x400",
     image3: "https://placehold.co/300x400",
     paragraphs: [
-      `Hi, I’m ${process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "John Doe"} - a designer based in Lagos. I spend my time exploring the space where human behavior meets digital interaction, crafting experiences that feel as intentional as they are intuitive.`,
-      "My approach is rooted in the belief that design is a collaborative evolution. I lean into the insights of those around me to solve complex problems, aiming to create work that resonates on a functional and emotional level.",
-      "Whether I'm refining a core interface or exploring new visual directions, I'm driven by the quiet details that make a product feel right.",
-      "When I’m away from the screen, I’m usually looking for inspiration in the city’s food, coffee, and foreign culture.",
+      [
+        {
+          _type: "block",
+          children: [
+            { _type: "span", text: "Hi, I’m " },
+            { _type: "span", marks: ["strong"], text: "Doe" },
+            {
+              _type: "span",
+              text: ", a UI?UX and full-stack software engineer based in Nigeria. I spend my time exploring financial technology, banking platforms, and microservices architecture.",
+            },
+          ],
+        },
+      ],
+      [
+        {
+          _type: "block",
+          children: [
+            {
+              _type: "span",
+              text: "My approach is rooted in the belief that software engineering is a collaborative evolution. I lean into robust validation, idempotent transactions, and scalable UI/UX design to solve complex problems.",
+            },
+          ],
+        },
+      ],
+      [
+        {
+          _type: "block",
+          children: [
+            {
+              _type: "span",
+              text: "Whether I'm building banking-as-a-service infrastructure or refining API integrations, I'm driven by the performance and security details that make a product reliable.",
+            },
+          ],
+        },
+      ],
+      [
+        {
+          _type: "block",
+          children: [
+            {
+              _type: "span",
+              text: "When I’m away from the screen, you can reach out directly via email or check out my work across platforms.",
+            },
+          ],
+        },
+      ],
     ],
   },
   heroLines: [
     {
       _key: "line-1",
-      text: "Lagos based",
-      highlight: "",
-      isItalic: false,
+      content: [
+        {
+          _type: "block",
+          children: [{ _type: "span", text: "Lagos based" }],
+        },
+      ],
     },
     {
       _key: "line-2",
-      text: "designer, passionate",
-      highlight: "",
-      isItalic: true,
+      content: [
+        {
+          _type: "block",
+          children: [
+            { _type: "span", marks: ["em"], text: "designer, passionate" },
+          ],
+        },
+      ],
     },
     {
       _key: "line-3",
-      text: "about ",
-      highlight: "Suya, tea",
-      isItalic: true,
+      content: [
+        {
+          _type: "block",
+          children: [
+            { _type: "span", marks: ["em"], text: "about " },
+            { _type: "span", marks: ["strong"], text: "Suya, tea" },
+          ],
+        },
+      ],
     },
     {
       _key: "line-4",
-      text: "and solving",
-      highlight: "",
-      isItalic: false,
+      content: [
+        {
+          _type: "block",
+          children: [{ _type: "span", text: "and solving" }],
+        },
+      ],
     },
     {
       _key: "line-5",
-      text: "complex problems.",
-      highlight: "",
-      isItalic: true,
+      content: [
+        {
+          _type: "block",
+          children: [
+            { _type: "span", marks: ["em"], text: "complex problems." },
+          ],
+        },
+      ],
     },
   ],
   projects: {
     ibb: {
       name: "Source Business Banking",
       slug: "ibb",
+      projectType: "web",
       portfolioWork: {
         title: "Business Banking",
         subtitle: "Source Business Banking",
-        headerImg: "https://placehold.co/1920x1080/webp?text=IBB+Hero",
-        headerText:
+        headerImage: {
+          image: { url: "https://placehold.co/1920x1080/webp?text=IBB+Hero" },
+          sizeMode: "fullSize",
+          subtext: "Source Business Banking Dashboard Overview",
+        },
+        headerSubtitle:
           "Redesigning the corporate banking experience for enterprise-scale financial management.",
         sections: [
           {
             _key: "default-1",
-            items: [
+            title: "Source Business Banking",
+            paragraph: [
               {
-                title: "Source Business Banking",
-                paragraph:
-                  "The current dashboard was overwhelming for first-time users.",
-                list: [
-                  "12-click navigation",
-                  "High bounce rate",
-                  "Legacy color palette",
+                _type: "block",
+                children: [
+                  { _type: "span", text: "The current dashboard was " },
+                  { _type: "span", marks: ["strong"], text: "overwhelming" },
+                  { _type: "span", text: " for first-time users." },
                 ],
               },
             ],
-            subText: [
-              { key: "Role", value: "Product Designer" },
-              { key: "Tools", value: "Figma, React" },
-            ],
+            fullSize: true,
             images: [
               {
-                _key: "img-1",
-                url: "https://placehold.co/1920x1080/webp?text=New+Dashboard",
-                title: "New Dashboard",
-                canViewFullSize: true,
+                image: {
+                  url: "https://placehold.co/1920x1080/webp?text=New+Dashboard",
+                },
+                fullSize: true,
+                subtext: "New Dashboard",
               },
             ],
           },
@@ -93,27 +159,46 @@ export const DEFAULT_PORTFOLIO_DATA: PortfolioData = {
     baas: {
       name: "Radix (BaaS)",
       slug: "baas",
+      projectType: "web",
       portfolioWork: {
         title: "Radix Backend",
         subtitle: "Backend as a Service Infrastructure",
-        headerImg: "https://placehold.co/1920x1080/webp?text=Radix+BaaS+Hero",
-        headerText:
+        headerImage: {
+          image: {
+            url: "https://placehold.co/1920x1080/webp?text=Radix+BaaS+Hero",
+          },
+          sizeMode: "fullSize",
+          subtext: "Radix BaaS Infrastructure",
+        },
+        headerSubtitle:
           "Building a scalable, developer-first API infrastructure for fintech startups.",
         sections: [
           {
             _key: "default-2",
-            items: [
+            title: "The Mission",
+            paragraph: [
               {
-                title: "The Mission",
-                paragraph:
-                  "Radix aims to reduce the time-to-market for new banks from 18 months to 3 weeks.",
+                _type: "block",
+                children: [
+                  {
+                    _type: "span",
+                    text: "Radix aims to reduce the time-to-market for new banks from ",
+                  },
+                  {
+                    _type: "span",
+                    marks: ["em"],
+                    text: "18 months to 3 weeks.",
+                  },
+                ],
               },
             ],
-            subText: [{ key: "MyRole", value: "Lead Product Designer" }],
-            quoteBlock: {
-              text: "The integration was so seamless, we didn't even need to call support.",
-              author: "CTO, Fintech Startup",
-            },
+            fullSize: true,
+            quotes: [
+              {
+                text: "The integration was so seamless, we didn't even need to call support.",
+                author: "CTO, Fintech Startup",
+              },
+            ],
           },
         ],
       },
@@ -121,35 +206,61 @@ export const DEFAULT_PORTFOLIO_DATA: PortfolioData = {
     mobile_banking: {
       name: "Mobile Banking",
       slug: "mobile-banking",
+      projectType: "mobile",
       portfolioWork: {
         title: "Mobile Banking",
         subtitle: "Consumer Wealth Management",
-        headerImg: "https://placehold.co/1920x1080/webp?text=Mobile+App+Hero",
-        headerText:
+        headerImage: {
+          image: {
+            url: "https://placehold.co/600x1200/webp?text=Mobile+App+Hero",
+          },
+          sizeMode: "mobileSize",
+          subtext: "Mobile Banking App Onboarding",
+        },
+        headerSubtitle:
           "A mobile-first approach to retail banking, focusing on micro-investments.",
         sections: [
           {
             _key: "default-3",
-            items: [
+            title: "User Research",
+            paragraph: [
               {
-                title: "User Research",
-                paragraph:
-                  "We interviewed 50+ Gen Z users regarding banking terminology.",
-                list: ["Users prefer 'Buckets'", "Dark mode is essential"],
+                _type: "block",
+                children: [
+                  {
+                    _type: "span",
+                    text: "We interviewed 50+ Gen Z users regarding banking terminology.",
+                  },
+                ],
               },
             ],
-            images: [
+            paragraph2: [
               {
-                _key: "m1",
-                url: "https://placehold.co/600x1200/webp?text=Wireframe+1",
-                title: "Onboarding",
-                canViewFullSize: true,
+                _type: "block",
+                listItem: "bullet",
+                children: [{ _type: "span", text: "Users prefer 'Buckets'" }],
               },
               {
-                _key: "m2",
-                url: "https://placehold.co/600x1200/webp?text=Wireframe+2",
-                title: "Savings",
-                canViewFullSize: true,
+                _type: "block",
+                listItem: "bullet",
+                children: [{ _type: "span", text: "Dark mode is essential" }],
+              },
+            ],
+            fullSize: true,
+            images: [
+              {
+                image: {
+                  url: "https://placehold.co/600x1200/webp?text=Wireframe+1",
+                },
+                fullSize: false,
+                subtext: "Onboarding",
+              },
+              {
+                image: {
+                  url: "https://placehold.co/600x1200/webp?text=Wireframe+2",
+                },
+                fullSize: false,
+                subtext: "Savings",
               },
             ],
           },
@@ -159,24 +270,43 @@ export const DEFAULT_PORTFOLIO_DATA: PortfolioData = {
     freelance: {
       name: "Freelance Projects",
       slug: "freelance",
+      projectType: "graphic",
       portfolioWork: {
         title: "Select Freelance Works",
         subtitle: "Branding & Web Design",
-        headerImg:
-          "https://placehold.co/1920x1080/webp?text=Freelance+Showcase+Hero",
-        headerText: "A collection of various identity and digital products.",
+        headerImage: {
+          image: {
+            url: "https://placehold.co/1920x1080/webp?text=Freelance+Showcase+Hero",
+          },
+          sizeMode: "fullSize",
+          subtext: "Freelance Brand Showcase",
+        },
+        headerSubtitle:
+          "A collection of various identity and digital products.",
         sections: [
           {
             _key: "default-4",
-            items: [
+            title: "Brand Identity",
+            paragraph: [
               {
-                title: "Brand Identity",
-                paragraph: "Developing cohesive visual languages for startups.",
+                _type: "block",
+                children: [
+                  {
+                    _type: "span",
+                    text: "Developing cohesive visual languages for startups.",
+                  },
+                ],
               },
             ],
-            subText: [
-              { key: "Services", value: "Brand Strategy, Logo Design" },
-            ],
+            fullSize: true,
+            banner: {
+              bannerTitle: "Key Focus Areas",
+              bannerTexts: [
+                "Brand Strategy",
+                "Visual Identity",
+                "Digital Design",
+              ],
+            },
           },
         ],
       },

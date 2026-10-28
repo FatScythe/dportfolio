@@ -7,9 +7,7 @@ export const sanityQuery = `{
     behanceUrl,
     heroLines[] {
       _key,
-      text,
-      highlight,
-      isItalic
+      content
     },
     "aboutPage": {
       "paragraphs": aboutPage.paragraphs,
@@ -18,24 +16,36 @@ export const sanityQuery = `{
       "image3": aboutPage.image3.asset->url
     }
   },
-  "projects": *[_type == "project"] | order(id asc) {
+  "projects": *[_type == "project"] | order(_createdAt asc) {
     name,
     "slug": slug.current,
+    projectType,
     portfolioWork {
       title,
       subtitle,
-      "headerImg": headerImg.asset->url,
-      headerText,
+      headerImage {
+        "image": {
+          "url": image.asset->url
+        },
+        sizeMode,
+        subtext
+      },
+      headerSubtitle,
       sections[] {
         ...,
-        _type == "imageBlock" => {
-          "url": image.asset->url,
-          title,
-          canViewFullSize
+        images[] {
+          "image": {
+            "url": image.asset->url
+          },
+          fullSize,
+          subtext
         },
-        _type == "quoteBlock" => {
-          text,
-          author
+        images2[] {
+          "image": {
+            "url": image.asset->url
+          },
+          fullSize,
+          subtext
         }
       }
     }
@@ -55,50 +65,63 @@ export interface PortfolioData {
 
 export interface HeroLine {
   _key: string;
-  text: string;
-  highlight?: string;
-  isItalic?: boolean;
+  content: any[];
 }
 
-interface AboutPage {
-  image1: string;
-  image2: string;
-  image3: string;
-  paragraphs: string[];
+export interface AboutPage {
+  image1: string | null;
+  image2: string | null;
+  image3: string | null;
+  paragraphs: any[]; // portable text blocks array...
 }
 
 export interface Project {
   name: string;
   slug: string;
+  projectType: "web" | "mobile" | "graphic";
   portfolioWork: PortfolioWork;
 }
 
-interface PortfolioWork {
+export interface PortfolioWork {
   title: string;
   subtitle: string;
-  headerImg: string;
-  headerText: string;
+  headerImage?: {
+    image: {
+      url: string;
+    };
+    sizeMode: "fullSize" | "mobileSize";
+    subtext?: string;
+  };
+  headerSubtitle: string;
   sections: SectionItem[];
 }
 
 export interface SectionItem {
   _key: string;
-  items?: Array<{
-    title: string;
-    paragraph: string;
-    list?: string[];
+  title?: string;
+  paragraph?: any[];
+  fullSize?: boolean;
+  images?: Array<{
+    image: {
+      url: string;
+    };
+    fullSize: boolean;
+    subtext?: string;
   }>;
-  images?: GalleryItem[];
-  quoteBlock?: {
+  quotes?: Array<{
     text: string;
     author: string;
+  }>;
+  paragraph2?: any[];
+  images2?: Array<{
+    image: {
+      url: string;
+    };
+    fullSize: boolean;
+    subtext?: string;
+  }>;
+  banner?: {
+    bannerTitle?: string;
+    bannerTexts?: string[];
   };
-  subText?: Array<{ key: string; value: string }>;
-}
-
-interface GalleryItem {
-  _key: string;
-  title: string;
-  url: string;
-  canViewFullSize: boolean;
 }

@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: project?.name || "Project",
-    description: project?.portfolioWork?.headerText,
+    description: project?.portfolioWork?.title,
   };
 }
 

@@ -3,12 +3,37 @@ import { client } from "@/sanity/lib/client";
 import { PortfolioData, Project, sanityQuery } from "@/types/portfolio";
 import { DEFAULT_PORTFOLIO_DATA } from "@/constants/defaults";
 
+/**
+ * Helper to verify if a Portable Text array or array of blocks
+ * contains actual non-whitespace text string content.
+ */
+function hasPortableTextContent(portableTextData: any): boolean {
+  if (!Array.isArray(portableTextData) || portableTextData.length === 0) {
+    return false;
+  }
+
+  return portableTextData.some((item) => {
+    // If it's a HeroLine wrapping block object ({ content: [...] })
+    const blocks = Array.isArray(item?.content) ? item.content : [item];
+
+    return blocks.some((block: any) => {
+      if (!Array.isArray(block?.children)) return false;
+      return block.children.some(
+        (child: any) =>
+          typeof child?.text === "string" && child.text.trim().length > 0,
+      );
+    });
+  });
+}
+
 export const usePortfolioData = cache(async (): Promise<PortfolioData> => {
   try {
     const rawData = await client.fetch(
       sanityQuery,
       {},
-      { next: { revalidate: 60 } },
+      {
+        next: { tags: ["portfolio"] }, // tag-based cache instead of timed revalidate...
+      },
     );
 
     if (!rawData || !rawData.settings) {
@@ -27,10 +52,9 @@ export const usePortfolioData = cache(async (): Promise<PortfolioData> => {
         rawData?.settings?.linkedInUrl || DEFAULT_PORTFOLIO_DATA.linkedInUrl,
       behanceUrl:
         rawData?.settings?.behanceUrl || DEFAULT_PORTFOLIO_DATA.behanceUrl,
-      heroLines:
-        rawData?.settings?.heroLines && rawData.settings.heroLines.length > 0
-          ? rawData.settings.heroLines
-          : DEFAULT_PORTFOLIO_DATA.heroLines,
+      heroLines: hasPortableTextContent(rawData?.settings?.heroLines)
+        ? rawData.settings.heroLines
+        : DEFAULT_PORTFOLIO_DATA.heroLines,
 
       aboutPage: {
         image1:
@@ -45,18 +69,20 @@ export const usePortfolioData = cache(async (): Promise<PortfolioData> => {
           rawData?.settings?.aboutPage?.image3 ||
           DEFAULT_PORTFOLIO_DATA.aboutPage.image3 ||
           null,
-
-        paragraphs:
-          rawData?.settings?.aboutPage?.paragraphs ||
-          DEFAULT_PORTFOLIO_DATA.aboutPage.paragraphs ||
-          [],
+        paragraphs: hasPortableTextContent(
+          rawData?.settings?.aboutPage?.paragraphs,
+        )
+          ? rawData.settings.aboutPage.paragraphs
+          : DEFAULT_PORTFOLIO_DATA.aboutPage.paragraphs,
       },
 
       projects:
-        rawData?.projects?.length > 0
+        Array.isArray(rawData?.projects) && rawData.projects.length > 0
           ? rawData.projects.reduce(
               (acc: Record<string, Project>, project: any) => {
-                if (project.slug) acc[project.slug] = project;
+                if (project?.slug) {
+                  acc[project.slug] = project;
+                }
                 return acc;
               },
               {},

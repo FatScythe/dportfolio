@@ -1,187 +1,229 @@
 "use client";
 
 import Image from "next/image";
+import { PortableText, PortableTextComponents } from "@portabletext/react";
 import { Project, SectionItem } from "@/types/portfolio";
 import PageHeader from "@/app/components/utils";
 import { cn } from "@/app/libs/utils";
 
-function WorkSections({ sections }: { sections: SectionItem[] }) {
+const portableTextComponents: PortableTextComponents = {
+  marks: {
+    strong: ({ children }) => (
+      <strong className="font-bold text-gray-900">{children}</strong>
+    ),
+    em: ({ children }) => (
+      <em className="italic font-normal text-gray-800">{children}</em>
+    ),
+    link: ({ value, children }) => {
+      const href = value?.href || "#";
+      const isExternal =
+        href.startsWith("http://") || href.startsWith("https://");
+
+      return (
+        <a
+          href={href}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
+          className="text-accent underline hover:opacity-80 transition-opacity font-medium"
+        >
+          {children}
+        </a>
+      );
+    },
+  },
+  block: {
+    normal: ({ children }) => (
+      <p className="text-gray-600 leading-relaxed text-base md:text-lg font-light mb-4">
+        {children}
+      </p>
+    ),
+  },
+  list: {
+    bullet: ({ children }) => (
+      <ul className="list-disc list-inside space-y-2 mb-4 text-gray-600 pl-4">
+        {children}
+      </ul>
+    ),
+    number: ({ children }) => (
+      <ol className="list-decimal list-inside space-y-2 mb-4 text-gray-600 pl-4">
+        {children}
+      </ol>
+    ),
+  },
+  listItem: {
+    bullet: ({ children }) => <li className="leading-relaxed">{children}</li>,
+    number: ({ children }) => <li className="leading-relaxed">{children}</li>,
+  },
+};
+
+function WorkSections({
+  sections,
+  projectType,
+}: {
+  sections: SectionItem[];
+  projectType: string;
+}) {
   return (
-    <div className="space-y-40">
-      {sections.map((section, idx) => {
-        const subTextEntries = Array.isArray(section.subText)
-          ? Object.fromEntries(
-              section.subText.map((item: any) => [item.key, item.value]),
-            )
-          : section.subText;
-
-        const activeQuote = section.quoteBlock;
-
-        const activeImages = section.images;
+    <div className="space-y-32">
+      {sections.map((section: any, idx: number) => {
+        const isFullSize = section.fullSize ?? true;
 
         return (
-          <div key={section._key || idx} className="space-y-20">
-            {section.items && (
+          <div
+            key={section._key || idx}
+            className={cn("space-y-12", !isFullSize && "max-w-4xl mx-auto")}
+          >
+            {/* Section Title & Paragraph 1 */}
+            <div className="space-y-4">
+              {section.title && (
+                <h3 className="uppercase tracking-[0.2em] font-bold text-accent text-xs md:text-sm">
+                  {section.title}
+                </h3>
+              )}
+              {section.paragraph && (
+                <PortableText
+                  value={section.paragraph}
+                  components={portableTextComponents}
+                />
+              )}
+            </div>
+
+            {/* Optional Images 1 */}
+            {section.images && section.images.length > 0 && (
               <div
                 className={cn(
-                  "grid gap-12 w-full items-start",
-                  Array.isArray(section.items) && section.items.length > 1
+                  "w-full grid gap-6",
+                  section.images.length > 1 &&
+                    section.images.some((img: any) => !img.fullSize)
                     ? "grid-cols-1 md:grid-cols-2"
-                    : "grid-cols-1 max-w-4xl",
+                    : "grid-cols-1",
                 )}
               >
-                {section.items.map((item: any, i: number) => (
-                  <div key={i} className={cn("space-y-6")}>
-                    <h3
+                {section.images.map((img: any, i: number) => (
+                  <div key={i} className="space-y-2">
+                    <div
                       className={cn(
-                        "uppercase tracking-[0.2em] font-bold text-accent text-xs md:text-sm",
+                        "relative overflow-hidden rounded-sm bg-gray-50 w-full",
+                        projectType === "mobile"
+                          ? "aspect-[9/16] max-w-sm mx-auto"
+                          : "aspect-video",
                       )}
                     >
-                      {item.title}
-                    </h3>
-                    <p
-                      className={cn(
-                        "text-gray-600 leading-relaxed text-base md:text-lg font-light",
+                      {img.image?.url && (
+                        <Image
+                          src={img.image.url}
+                          alt={img.subtext || "Project Image"}
+                          fill
+                          className="object-cover"
+                        />
                       )}
-                    >
-                      {item.paragraph}
-                    </p>
-                    {item.list && item.list.length > 0 && (
-                      <ul className={cn("space-y-3 pt-2")}>
-                        {item.list.map((bullet: string, bIdx: number) => (
-                          <li
-                            key={bIdx}
-                            className={cn(
-                              "flex items-start gap-3 text-sm md:text-base text-gray-500",
-                            )}
-                          >
-                            <span
-                              className={cn(
-                                "mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-dark/40",
-                              )}
-                            />
-                            <span className={cn("leading-relaxed")}>
-                              {bullet}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
+                    </div>
+                    {img.subtext && (
+                      <p className="text-xs text-gray-400 italic text-center">
+                        {img.subtext}
+                      </p>
                     )}
                   </div>
                 ))}
               </div>
             )}
 
-            {(activeQuote || subTextEntries) && (
+            {/* Optional Quotes (Side by side on desktop, stacked on mobile) */}
+            {section.quotes && section.quotes.length > 0 && (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-b border-gray-100 py-8">
+                {section.quotes.map((q: any, i: number) => (
+                  <div
+                    key={i}
+                    className="border-l-2 border-accent pl-6 space-y-3"
+                  >
+                    <p className="text-gray-700 italic text-base leading-relaxed">
+                      "{q.text}"
+                    </p>
+                    {q.author && (
+                      <cite className="block not-italic text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
+                        — {q.author}
+                      </cite>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Optional Paragraph 2 / Bullet Points */}
+            {section.paragraph2 && (
+              <div className="space-y-4">
+                <PortableText
+                  value={section.paragraph2}
+                  components={portableTextComponents}
+                />
+              </div>
+            )}
+
+            {/* Optional Images 2 */}
+            {section.images2 && section.images2.length > 0 && (
               <div
                 className={cn(
-                  "grid grid-cols-1 md:grid-cols-12 gap-10 items-start border-t border-gray-100 pt-12",
+                  "w-full grid gap-6",
+                  section.images2.length > 1 &&
+                    section.images2.some((img: any) => !img.fullSize)
+                    ? "grid-cols-1 md:grid-cols-2"
+                    : "grid-cols-1",
                 )}
               >
-                <div className={cn("md:col-span-7")}>
-                  {subTextEntries && (
-                    <div className={cn("grid grid-cols-2 gap-y-6 gap-x-10")}>
-                      {Object.entries(subTextEntries).map(
-                        ([key, val]: [string, any]) => (
-                          <div key={key}>
-                            <span
-                              className={cn(
-                                "font-bold text-gray-900 uppercase tracking-widest text-[10px] block mb-2",
-                              )}
-                            >
-                              {key.replace(/([A-Z])/g, " $1")}
-                            </span>
-                            <span className={cn("text-gray-500 text-sm")}>
-                              {val}
-                            </span>
-                          </div>
-                        ),
-                      )}
-                    </div>
-                  )}
-                </div>
-
-                <div className={cn("md:col-span-5")}>
-                  {activeQuote && (
-                    <div className={cn("space-y-8")}>
-                      {(Array.isArray(activeQuote)
-                        ? activeQuote
-                        : [activeQuote]
-                      ).map((q, i) => (
-                        <div
-                          key={i}
-                          className={cn("border-l-2 border-accent pl-6")}
-                        >
-                          <p
-                            className={cn(
-                              "text-gray-700 italic text-base leading-relaxed",
-                            )}
-                          >
-                            "{q.text}"
-                          </p>
-                          <cite
-                            className={cn(
-                              "block mt-3 not-italic text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400",
-                            )}
-                          >
-                            — {q.author}
-                          </cite>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              </div>
-            )}
-
-            {activeImages && (
-              <div className={cn("w-full pt-10")}>
-                <div
-                  className={cn(
-                    "flex flex-col md:flex-row gap-6 w-full",
-                    "*:flex-1",
-                  )}
-                >
-                  {(Array.isArray(activeImages)
-                    ? activeImages
-                    : [activeImages]
-                  ).map((img, i) => (
+                {section.images2.map((img: any, i: number) => (
+                  <div key={i} className="space-y-2">
                     <div
-                      key={i}
                       className={cn(
-                        "group relative aspect-video bg-gray-50 overflow-hidden rounded-sm",
+                        "relative overflow-hidden rounded-sm bg-gray-50 w-full",
+                        projectType === "mobile"
+                          ? "aspect-[9/16] max-w-sm mx-auto"
+                          : "aspect-video",
                       )}
                     >
-                      {img.url && (
+                      {img.image?.url && (
                         <Image
-                          src={img.url}
-                          alt={img.title || "Project Image"}
+                          src={img.image.url}
+                          alt={img.subtext || "Project Image"}
                           fill
-                          className={cn(
-                            "object-cover transition-transform duration-1000 group-hover:scale-105",
-                          )}
+                          className="object-cover"
                         />
                       )}
-                      {img.canViewFullSize && (
-                        <div
-                          className={cn(
-                            "absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-8",
-                          )}
-                        >
-                          <span
-                            className={cn(
-                              "text-[10px] text-white bg-black/40 backdrop-blur-md px-4 py-2 uppercase tracking-[0.3em]",
-                            )}
-                          >
-                            Fullsize
-                          </span>
-                        </div>
-                      )}
                     </div>
-                  ))}
-                </div>
+                    {img.subtext && (
+                      <p className="text-xs text-gray-400 italic text-center">
+                        {img.subtext}
+                      </p>
+                    )}
+                  </div>
+                ))}
               </div>
             )}
+
+            {/* Optional Banner (Demarcated with lines above and below) */}
+            {section.banner?.bannerTexts &&
+              section.banner.bannerTexts.length > 0 && (
+                <div className="border-t border-b border-r-0 border-l-0 border-black border-2 py-16 my-8 space-y-4">
+                  {section.banner.bannerTitle && (
+                    <h4 className="text-center text-2xl md:text-5xl capitalize">
+                      {section.banner.bannerTitle}
+                    </h4>
+                  )}
+                  <div className="flex flex-wrap items-center justify-center gap-3 text-center text-lg md:text-xl font-medium text-gray-700">
+                    {section.banner.bannerTexts.map(
+                      (textItem: string, bIdx: number) => (
+                        <div key={bIdx} className="flex items-center gap-4">
+                          <span>{textItem}</span>
+                          {bIdx < section.banner.bannerTexts.length - 1 && (
+                            <span className="font-bold hidden md:inline">
+                              •
+                            </span>
+                          )}
+                        </div>
+                      ),
+                    )}
+                  </div>
+                </div>
+              )}
           </div>
         );
       })}
@@ -190,35 +232,55 @@ function WorkSections({ sections }: { sections: SectionItem[] }) {
 }
 
 export default function WorkClient({ project }: { project: Project }) {
-  const { portfolioWork } = project;
+  const { portfolioWork, projectType } = project;
+  const headerImg = portfolioWork?.headerImage;
 
   return (
-    <main className={cn("max-w-6xl mx-auto px-6 py-20")}>
+    <main className={cn("max-w-5xl mx-auto px-6 py-20")}>
       <PageHeader
         title={portfolioWork.title}
         subtitle={portfolioWork.subtitle}
         className="my-10"
       />
 
-      {portfolioWork.headerImg && (
-        <div className="relative aspect-25/11 w-full mb-16 overflow-hidden">
-          <Image
-            src={portfolioWork.headerImg}
-            alt="Hero"
-            fill
-            className="object-cover"
-          />
+      {headerImg?.image?.url && (
+        <div className="mb-16 space-y-3">
+          <div
+            className={cn(
+              "relative w-full overflow-hidden rounded-sm",
+              headerImg.sizeMode === "mobileSize" || projectType === "mobile"
+                ? "aspect-[9/16] max-w-md mx-auto"
+                : "aspect-25/11",
+            )}
+          >
+            <Image
+              src={headerImg.image.url}
+              alt={headerImg.subtext || "Hero"}
+              fill
+              className="object-cover"
+            />
+          </div>
+          {headerImg.subtext && (
+            <p className="text-xs text-gray-400 italic text-center">
+              {headerImg.subtext}
+            </p>
+          )}
         </div>
       )}
 
-      <div className="max-w-3xl mx-auto text-center mb-20">
-        <h2 className="text-xl leading-relaxed font-light text-gray-700">
-          {portfolioWork.headerText}
-        </h2>
-      </div>
+      {portfolioWork.headerSubtitle && (
+        <div className="max-w-2xl mx-auto text-center mb-20">
+          <h2 className="text-xl leading-relaxed font-light text-gray-700">
+            {portfolioWork.headerSubtitle}
+          </h2>
+        </div>
+      )}
 
       <hr className="border-gray-200 mb-20" />
-      <WorkSections sections={portfolioWork.sections || []} />
+      <WorkSections
+        sections={portfolioWork.sections || []}
+        projectType={projectType}
+      />
     </main>
   );
 }
