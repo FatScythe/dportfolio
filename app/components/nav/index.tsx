@@ -16,7 +16,7 @@ export default function Header() {
 
   const isActive = (path: string) => pathname === path;
 
-  const { projects } = usePortfolio();
+  const { projects, resumeUrl } = usePortfolio();
 
   const [isOpen, setIsOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -175,10 +175,7 @@ export default function Header() {
 
             <li>
               <Link
-                href={
-                  process.env?.NEXT_PUBLIC_PORTFOLIO_CV_URL ||
-                  "https://drive.google.com/file/d/1d4sOTshJnty9pAGGECXMh8ZXOQaFfilo/view?usp=sharing"
-                }
+                href={resumeUrl}
                 target="_blank"
                 className={cn(
                   "transition-colors hover:text-accent",
