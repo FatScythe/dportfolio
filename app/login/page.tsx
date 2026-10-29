@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useRef, useEffect } from "react";
+
 // icons...
 import { FaLock, FaArrowRight } from "react-icons/fa";
 
@@ -13,8 +15,18 @@ import { cn } from "../libs/utils";
 import { verifyPassword } from "../actions/verify-password";
 
 export default function LoginPage() {
-  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const passwordInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    // focus the password input immediately on page load...
+    passwordInputRef.current?.focus();
+  }, []);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setErrorMsg(null);
+
     const formData = new FormData(e.currentTarget);
     const password = formData.get("password");
 
@@ -26,7 +38,10 @@ export default function LoginPage() {
       document.cookie = "slug_auth=true; path=/; max-age=600; SameSite=Strict";
       window.location.href = redirectTo;
     } else {
-      alert(result?.error || "Wrong password");
+      setErrorMsg(result?.error || "Wrong password");
+      // re-focus and select input text for quick re-typing...
+      passwordInputRef.current?.focus();
+      passwordInputRef.current?.select();
     }
   }
 
@@ -76,9 +91,10 @@ export default function LoginPage() {
           </p>
         </div>
 
-        <div className={cn("w-full max-w-sm")}>
+        <div className={cn("w-full max-w-sm space-y-4")}>
           <form onSubmit={handleSubmit} className={cn("relative group")}>
             <input
+              ref={passwordInputRef}
               name="password"
               type="password"
               placeholder="Password"
@@ -97,6 +113,13 @@ export default function LoginPage() {
               <FaArrowRight size={18} />
             </button>
           </form>
+
+          {/* Inline error message */}
+          {errorMsg && (
+            <p className="text-red-400 text-xs tracking-wider font-sans pt-2">
+              {errorMsg}
+            </p>
+          )}
         </div>
 
         <div className={cn("fixed bottom-12")}>
