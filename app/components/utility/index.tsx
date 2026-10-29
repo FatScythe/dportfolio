@@ -4,55 +4,40 @@ import { useState } from "react";
 import Image from "next/image";
 import { cn } from "@/app/libs/utils";
 
-/**
- * reusable Zoomable Image component. Accepts custom container className
- * so it works seamlessly on both Work case studies and the About page.
- */
-export default function ZoomableImage({
-  src,
-  alt,
-  subtext,
-  className,
-}: {
+interface ZoomableImageProps {
   src: string;
   alt: string;
   subtext?: string;
   className?: string;
-}) {
+}
+
+/**
+ * Reusable Zoomable Image component where clicking anywhere on the image opens the full-screen modal.
+ */
+export function ZoomableImage({
+  src,
+  alt,
+  subtext,
+  className,
+}: ZoomableImageProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      <div className="space-y-2 group relative">
+      <div className="space-y-2">
         <div
+          onClick={() => setIsOpen(true)}
           className={cn(
-            "relative overflow-hidden rounded-sm bg-gray-50 w-full",
+            "relative overflow-hidden rounded-sm bg-gray-50 w-full cursor-pointer group",
             className || "aspect-video",
           )}
         >
-          <Image src={src} alt={alt} fill className="object-cover" />
-
-          {/* Bottom corner expand button */}
-          <button
-            onClick={() => setIsOpen(true)}
-            aria-label="Expand image"
-            className="absolute bottom-3 right-3 z-10 bg-black/70 hover:bg-black text-white p-2 rounded-full backdrop-blur-sm opacity-80 group-hover:opacity-100 transition-all duration-300 shadow-md flex items-center justify-center"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
-              />
-            </svg>
-          </button>
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+          />
         </div>
 
         {subtext && (

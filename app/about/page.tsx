@@ -7,7 +7,7 @@ import { cn } from "@/app/libs/utils";
 import { usePortfolio } from "@/hook/usePortfolio";
 import { useSocialLinks } from "@/hook/useSocialLinks";
 import { PortableText, PortableTextComponents } from "@portabletext/react";
-import ZoomableImage from "../components/utility";
+import { ZoomableImage } from "../components/utility";
 
 const aboutPortableTextComponents: PortableTextComponents = {
   marks: {
