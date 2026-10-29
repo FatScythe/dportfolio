@@ -94,7 +94,7 @@ function WorkSections({
             <h3
               className={cn(
                 "uppercase tracking-[0.2em] font-bold text-accent text-xs md:text-sm",
-                isPaired && "text-[11px] md:text-xs",
+                isPaired && "text-[12px] md:text-sm",
               )}
             >
               {section.title}
@@ -114,12 +114,12 @@ function WorkSections({
             className={cn(
               "w-full grid gap-6",
               section.images.length > 1 &&
-                section.images.some((img: any) => !img.fullSize)
+                section.images.some((img) => !img.fullSize)
                 ? "grid-cols-1 md:grid-cols-2"
                 : "grid-cols-1",
             )}
           >
-            {section.images.map((img: any, i: number) => (
+            {section.images.map((img, i: number) => (
               <div key={i}>
                 {img.image?.url && (
                   <ZoomableImage
@@ -141,7 +141,7 @@ function WorkSections({
         {/* Optional Quotes */}
         {section.quotes && section.quotes.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-b border-gray-100 py-8">
-            {section.quotes.map((q: any, i: number) => (
+            {section.quotes.map((q, i: number) => (
               <div key={i} className="border-l-2 border-accent pl-6 space-y-3">
                 <p className="text-gray-700 italic text-sm md:text-base leading-relaxed">
                   "{q.text}"
@@ -172,12 +172,12 @@ function WorkSections({
             className={cn(
               "w-full grid gap-6",
               section.images2.length > 1 &&
-                section.images2.some((img: any) => !img.fullSize)
+                section.images2.some((img) => !img.fullSize)
                 ? "grid-cols-1 md:grid-cols-2"
                 : "grid-cols-1",
             )}
           >
-            {section.images2.map((img: any, i: number) => (
+            {section.images2.map((img, i) => (
               <div key={i}>
                 {img.image?.url && (
                   <ZoomableImage
@@ -206,17 +206,14 @@ function WorkSections({
                 </h4>
               )}
               <div className="flex flex-wrap items-center justify-center gap-3 text-center text-lg md:text-xl font-medium text-gray-700">
-                {section?.banner?.bannerTexts?.map(
-                  (textItem: string, bIdx: number) => (
-                    <div key={bIdx} className="flex items-center gap-4">
-                      <span>{textItem}</span>
-                      {bIdx <
-                        (section?.banner?.bannerTexts?.length ?? 0) - 1 && (
-                        <span className="font-bold hidden md:inline">•</span>
-                      )}
-                    </div>
-                  ),
-                )}
+                {section?.banner?.bannerTexts?.map((textItem, bIdx: number) => (
+                  <div key={bIdx} className="flex items-center gap-4">
+                    <span>{textItem}</span>
+                    {bIdx < (section?.banner?.bannerTexts?.length ?? 0) - 1 && (
+                      <span className="font-bold hidden md:inline">•</span>
+                    )}
+                  </div>
+                ))}
               </div>
             </div>
           )}
@@ -283,8 +280,8 @@ export default function WorkClient({ project }: { project: Project }) {
       )}
 
       {portfolioWork.headerSubtitle && (
-        <div className="max-w-4xl mx-auto text-center mb-20 px-0">
-          <h2 className="text-xl md:text-2xl leading-loose font-normal text-gray-900 whitespace-pre-wrap">
+        <div className="mb-20 -mx-6 sm:-mx-16 lg:-mx-28 px-6 text-center">
+          <h2 className="text-lg md:text-xl lg:text-2xl leading-relaxed font-light text-gray-900 whitespace-pre-wrap max-w-5xl mx-auto font-serif">
             {portfolioWork.headerSubtitle}
           </h2>
         </div>
