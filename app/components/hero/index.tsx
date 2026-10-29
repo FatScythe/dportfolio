@@ -2,16 +2,15 @@ import { PortableText, PortableTextComponents } from "@portabletext/react";
 
 // utils...
 import { cn } from "@/app/libs/utils";
+
 // hooks
-import { usePortfolio } from "@/hook/usePortfolio";
+import { usePortfolioData } from "@/hook/usePortfolioData";
 
 const heroComponents: PortableTextComponents = {
   marks: {
-    em: ({ children }) => (
-      <em className="italic text-background/85 font-normal">{children}</em>
-    ),
+    em: ({ children }) => <em className="italic font-normal">{children}</em>,
     strong: ({ children }) => (
-      <strong className="font-bold text-accent not-italic">{children}</strong>
+      <strong className="text-accent not-italic font-normal">{children}</strong>
     ),
   },
   block: {
@@ -55,8 +54,8 @@ function truncatePortableText(content: any[], maxWords: number = 3) {
   });
 }
 
-export default function HeroBanner() {
-  const { heroLines } = usePortfolio();
+export default async function HeroBanner() {
+  const { heroLines } = await usePortfolioData();
 
   return (
     <section
@@ -73,7 +72,7 @@ export default function HeroBanner() {
           )}
         >
           {heroLines.map((line) => {
-            const formattedContent = truncatePortableText(line.content, 3);
+            const formattedContent = truncatePortableText(line.content, 4);
 
             return (
               <div
