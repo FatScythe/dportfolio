@@ -48,6 +48,12 @@ export const usePortfolioData = cache(async (): Promise<PortfolioData> => {
         rawData?.settings?.emailAddress || DEFAULT_PORTFOLIO_DATA.emailAddress,
       resumeUrl:
         rawData?.settings?.resumeUrl || DEFAULT_PORTFOLIO_DATA.resumeUrl,
+      loginBackgroundImage: rawData?.settings?.loginBackgroundImage?.url
+        ? rawData.settings.loginBackgroundImage
+        : {
+            url: "/images/login_bkg.jpg",
+            alt: "Zen Background",
+          },
       linkedInUrl:
         rawData?.settings?.linkedInUrl || DEFAULT_PORTFOLIO_DATA.linkedInUrl,
       heroLines: hasPortableTextContent(rawData?.settings?.heroLines)

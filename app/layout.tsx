@@ -55,8 +55,8 @@ const calluna = localFont({
 
 export const metadata: Metadata = {
   title: {
-    template: `%s | ${process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "John Doe"}`,
-    default: process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "John Doe",
+    template: `%s | ${process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "Designer Portfolio"}`,
+    default: process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "Designer Portfolio",
   },
   description:
     "Versatile UI/UX Designer specializing in engaging mobile and web interfaces.",

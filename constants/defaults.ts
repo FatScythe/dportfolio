@@ -1,7 +1,7 @@
 import { PortfolioData } from "@/types/portfolio";
 
 export const DEFAULT_PORTFOLIO_DATA: PortfolioData = {
-  portfolioName: process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "John Doe",
+  portfolioName: process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "Designer Portfolio",
   emailAddress: process.env.NEXT_PUBLIC_PORTFOLIO_EMAIL || "johndoe@email.com",
   resumeUrl: process.env.NEXT_PUBLIC_PORTFOLIO_CV_URL || "#",
   linkedInUrl: process.env.NEXT_PUBLIC_PORTFOLIO_LINKEDIN || "#",

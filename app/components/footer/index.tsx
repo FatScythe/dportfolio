@@ -8,7 +8,7 @@ import { ClassValue } from "clsx";
 import { useSocialLinks } from "@/hook/useSocialLinks";
 
 export default function Footer({ className = "" }: { className?: ClassValue }) {
-  const socialLinks = useSocialLinks();
+  const { links: socialLinks, portfolioName } = useSocialLinks();
   return (
     <footer
       className={cn("w-full bg-background px-4 sm:px-8 py-12", className)}
@@ -40,7 +40,9 @@ export default function Footer({ className = "" }: { className?: ClassValue }) {
           )}
         >
           © {new Date().getFullYear()}{" "}
-          {process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "John Doe"}
+          {portfolioName ||
+            process.env.NEXT_PUBLIC_PORTFOLIO_NAME ||
+            "Designer Portfolio"}
         </div>
       </div>
     </footer>

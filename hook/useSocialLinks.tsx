@@ -3,7 +3,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { usePortfolio } from "./usePortfolio";
 
 export function useSocialLinks() {
-  const { linkedInUrl, emailAddress } = usePortfolio();
+  const { linkedInUrl, emailAddress, portfolioName } = usePortfolio();
 
   const links = [
     ...(linkedInUrl && linkedInUrl !== "#"
@@ -22,5 +22,5 @@ export function useSocialLinks() {
     },
   ];
 
-  return links;
+  return { links, portfolioName };
 }

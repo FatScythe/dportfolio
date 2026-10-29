@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 // hooks...
+import { usePortfolio } from "@/hook/usePortfolio";
 import { usePortfolioData } from "@/hook/usePortfolioData";
 
 // component...
@@ -51,7 +52,7 @@ interface Props {
 
 export default async function WorkPage({ params }: Props) {
   const { slug } = await params;
-  const { projects } = await usePortfolioData();
+  const { projects } = usePortfolio();
   const project = projects[slug];
 
   if (!project) return <ProjectNotFound />;

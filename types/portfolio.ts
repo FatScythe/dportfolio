@@ -4,6 +4,10 @@ export const sanityQuery = `{
     emailAddress,
     resumeUrl,
     linkedInUrl,
+    loginBackgroundImage {
+      "url": asset->url,
+      alt
+    },
     heroLines[] {
       _key,
       content
@@ -56,6 +60,10 @@ export interface PortfolioData {
   emailAddress: string;
   resumeUrl: string;
   linkedInUrl: string;
+  loginBackgroundImage?: {
+    url?: string;
+    alt?: string;
+  };
   // behanceUrl: string;
   aboutPage: AboutPage;
   heroLines: HeroLine[];

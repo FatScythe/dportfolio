@@ -13,8 +13,10 @@ import { cn } from "../libs/utils";
 
 // actions...
 import { verifyPassword } from "../actions/verify-password";
+import { usePortfolio } from "@/hook/usePortfolio";
 
 export default function LoginPage() {
+  const { loginBackgroundImage, portfolioName } = usePortfolio();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const passwordInputRef = useRef<HTMLInputElement>(null);
 
@@ -45,16 +47,18 @@ export default function LoginPage() {
     }
   }
 
+  const bgSrc = loginBackgroundImage?.url || "/images/login_bkg.jpg";
+
   return (
     <div
       className={cn(
-        "relative flex flex-col items-center justify-center min-h-screen bg-black px-4 text-center overflow-hidden",
+        "relative flex flex-col items-center justify-center min-h-screen bg-black/20 px-4 text-center overflow-hidden",
       )}
     >
       <div className={cn("absolute inset-0 z-0")}>
         <Image
-          src="https://placehold.co/1920x1080/webp?text=Background+Image"
-          alt="Private Area"
+          src={bgSrc}
+          alt={loginBackgroundImage?.alt || "Private Area"}
           fill
           className={cn("object-cover object-center grayscale opacity-60")}
           priority
@@ -84,7 +88,10 @@ export default function LoginPage() {
               "text-lg uppercase tracking-[0.5em] text-white/90 font-serif",
             )}
           >
-            {process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "john doe"} portfolio
+            {portfolioName ||
+              process.env.NEXT_PUBLIC_PORTFOLIO_NAME ||
+              "Designer Portfolio"}{" "}
+            portfolio
           </p>
           <p className={cn("text-xl font-serif text-white/90")}>
             Feel free to reach out to me for the password
@@ -128,7 +135,9 @@ export default function LoginPage() {
               "text-[10px] uppercase tracking-[0.2em] text-white/40",
             )}
           >
-            {process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "John Doe"}
+            {portfolioName ||
+              process.env.NEXT_PUBLIC_PORTFOLIO_NAME ||
+              "Designer Portfolio"}
           </p>
         </div>
       </div>

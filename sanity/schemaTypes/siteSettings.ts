@@ -71,6 +71,21 @@ export default defineType({
       ],
     }),
     defineField({
+      name: "loginBackgroundImage",
+      title: "Login Background Image",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        {
+          name: "alt",
+          type: "string",
+          title: "Alt Text",
+        },
+      ],
+    }),
+    defineField({
       name: "aboutPage",
       type: "object",
       fields: [

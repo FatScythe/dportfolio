@@ -16,7 +16,7 @@ export default function Header() {
 
   const isActive = (path: string) => pathname === path;
 
-  const { projects, resumeUrl } = usePortfolio();
+  const { projects, resumeUrl, portfolioName } = usePortfolio();
 
   const [isOpen, setIsOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
@@ -68,7 +68,9 @@ export default function Header() {
                   "font-sans text-sm text-nowrap tracking-widest sm:tracking-normal font-bold sm:text-4xl sm:font-normal uppercase transition-opacity group-hover:opacity-70",
                 )}
               >
-                {process.env.NEXT_PUBLIC_PORTFOLIO_NAME || "John Doe"}
+                {portfolioName ||
+                  process.env.NEXT_PUBLIC_PORTFOLIO_NAME ||
+                  "Designer Portfolio"}
               </h1>
             </Link>
           </div>

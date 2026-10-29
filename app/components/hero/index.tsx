@@ -1,9 +1,9 @@
 import { PortableText, PortableTextComponents } from "@portabletext/react";
 
-// hooks
-import { usePortfolioData } from "@/hook/usePortfolioData";
 // utils...
 import { cn } from "@/app/libs/utils";
+// hooks
+import { usePortfolio } from "@/hook/usePortfolio";
 
 const heroComponents: PortableTextComponents = {
   marks: {
@@ -55,8 +55,8 @@ function truncatePortableText(content: any[], maxWords: number = 3) {
   });
 }
 
-export default async function HeroBanner() {
-  const { heroLines } = await usePortfolioData();
+export default function HeroBanner() {
+  const { heroLines } = usePortfolio();
 
   return (
     <section
