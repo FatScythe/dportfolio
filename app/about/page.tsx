@@ -41,7 +41,7 @@ const aboutPortableTextComponents: PortableTextComponents = {
 
 export default function About() {
   const { portfolioName, aboutPage } = usePortfolio();
-  const socialLinks = useSocialLinks();
+  const { links: socialLinks } = useSocialLinks();
 
   return (
     <section className={cn("bg-background min-h-screen py-20 px-4 sm:px-8")}>
